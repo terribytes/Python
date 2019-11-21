@@ -1,19 +1,19 @@
 """Convert Uniport record into FASTA format.
-
-This script parse the Uniport record (uniprot-neurofibromas.txt) and create
+ 
+This script parses the Uniport record (UniProt-neurofibromas.txt) and create
 FASTA format file.
-Eache Swiss-Prot record will be parse and converted to a FASTA-formatted
+Each Swiss-Prot record will be parsed and converted to a FASTA-formatted
 header and sequence.
-
+ 
 This file imported an output file called "output.fasta" and contains the
 following class and functions:
-    * UniprotEntry - A class defines the collection of UniprotEntry object
-                     and following method:
-                        * is_reviewed: To crean if the record is reviewed.
-                        * to_fasta: To construct FASTA header and sequence.
-    * main - The main function of the script to create FASTA output file.
-
-Authout: Jia Yi Terri Shen
+   * UniprotEntry - A class defines the collection of UniprotEntry object
+                    and the following method:
+                       * is_reviewed: To check if the record is reviewed.
+                       * to_fasta: To construct FASTA header and sequence.
+   * main - The main function of the script to create the FASTA output file.
+ 
+Author: Jia Yi Terri Shen
 Date: November 2019
 """
 
@@ -37,7 +37,7 @@ class UniprotEntry():
         seq(str): Sequence at line block follow by line SQ.
     Methods:
         is_reviewed: Returns TRUE if the record is reviewed.
-        to_fasta: Returns header and sequence in fasta format.
+        to_fasta: Returns header and sequence in FASTA format.
     """
 
     db = "sp"
