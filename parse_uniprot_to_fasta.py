@@ -1,10 +1,10 @@
 """Convert Uniport record into FASTA format.
- 
+
 This script parses the Uniport record (UniProt-neurofibromas.txt) and create
 FASTA format file.
 Each Swiss-Prot record will be parsed and converted to a FASTA-formatted
 header and sequence.
- 
+
 This file imported an output file called "output.fasta" and contains the
 following class and functions:
    * UniprotEntry - A class defines the collection of UniprotEntry object
@@ -12,7 +12,7 @@ following class and functions:
                        * is_reviewed: To check if the record is reviewed.
                        * to_fasta: To construct FASTA header and sequence.
    * main - The main function of the script to create the FASTA output file.
- 
+
 Author: Jia Yi Terri Shen
 Date: November 2019
 """
@@ -43,6 +43,13 @@ class UniprotEntry():
     db = "sp"
 
     def __init__(self, record):
+        """Define the instance attributes (listed in the class docstrings).
+
+        Args:
+            record(string): A multiline string consists of a Swiss-Prot entry.
+        Returns:
+            None
+        """
         # Find the status and entry name - ID
         entry_name_pattern = re.compile(r"ID\s+(\S+)\s+(\S+);.+")
         self.status = re.search(entry_name_pattern, record).group(2)
@@ -59,16 +66,11 @@ class UniprotEntry():
             self.gene_name = ""
 
         # Find the protein name or (Fragment) - DE
-        protein_pattern = re.compile(r"DE\s+RecName:\s+Full=(.*?)\s*({.+})*;" \
-                                    , re.M)
+        protein_name = re.search(r"DE\s+\w+:\s+Full=(.+?)\s*({.+})*;" \
+                                    , record, re.M).group(1)
         flags_pattern = re.compile(r"^DE\s+Flags:\s+(Fragment);", re.M)
 
-        if re.search(protein_pattern, record):
-            protein_name = re.search(protein_pattern, record).group(1)
-        else:
-            protein_name = None
-
-        if re.search(flags_pattern, record):
+        if protein_name and re.search(flags_pattern, record):
             self.protein_name = f"{protein_name} " \
                                 f"({re.search(flags_pattern,record).group(1)})"
         else:
